@@ -1,6 +1,6 @@
 // src/api/financeApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { FinanceSummaryResponse } from "../types";
+import type { FinanceSummaryResponse, ChartsResponse } from "../types";
 
 export const financeApi = createApi({
   reducerPath: "financeApi",     // key in Redux store
@@ -14,17 +14,28 @@ export const financeApi = createApi({
       providesTags: ["Finance"],
     }),
 
-    // Mutation: PATCH /api/finance/role
-    updateUserRole: builder.mutation<{ success: boolean; role: string }, string>({
-      query: (role) => ({
-        url: "/finance/role",
-        method: "PATCH",
-        body: { role },
-      }),
-    }),
+// Mutation: PATCH /api/finance/role
+updateUserRole: builder.mutation<{ success: boolean; role: string }, string>({
+  query: (role) => ({
+    url: "/finance/role",
+    method: "PATCH",
+    body: { role },
+  }),
+  invalidatesTags: ["Finance"],
+}),
+
+// Query: GET /api/finance/charts
+getFinanceCharts: builder.query<ChartsResponse, void>({
+  query: () => "/finance/charts",
+  providesTags: ["Finance"],
+}),
 
   }),
 });
 
 // Auto-generated hooks — use these in components
-export const { useGetFinanceSummaryQuery, useUpdateUserRoleMutation } = financeApi;
+export const {
+  useGetFinanceSummaryQuery,
+  useUpdateUserRoleMutation,
+  useGetFinanceChartsQuery,
+} = financeApi;

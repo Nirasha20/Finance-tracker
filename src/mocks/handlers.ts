@@ -48,4 +48,31 @@ export const handlers = [
     const body = await request.json() as { role: string };
     return HttpResponse.json({ success: true, role: body.role });
   }),
+
+  // src/mocks/handlers.ts — ADD this inside the handlers array
+
+http.get("/api/finance/charts", async () => {
+  await new Promise((resolve) => setTimeout(resolve, 600));
+
+  return HttpResponse.json({
+    balanceTrend: [
+      { date: "2024-01-01", balance: 2000 },
+      { date: "2024-02-01", balance: 8500 },
+      { date: "2024-03-01", balance: 14000 },
+      { date: "2024-04-01", balance: 19500 },
+      { date: "2024-05-01", balance: 27000 },
+      { date: "2024-06-01", balance: 31000 },
+      { date: "2024-07-01", balance: 38000 },
+      { date: "2024-08-01", balance: 42331 },
+    ],
+    spendingBreakdown: [
+      { name: "Shopping",      amount: 480.00, color: "#3b82f6" },
+      { name: "Food & Dining", amount: 387.98, color: "#ef4444" },
+      { name: "Entertainment", amount: 340.98, color: "#10b981" },
+      { name: "Transportation",amount: 270.00, color: "#f59e0b" },
+      { name: "Utilities",     amount: 190.00, color: "#8b5cf6" },
+    ],
+  });
+}),
 ];
+

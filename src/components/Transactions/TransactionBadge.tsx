@@ -14,9 +14,9 @@ export default function TransactionBadge({ type }: Props) {
       borderRadius: "999px",
       fontSize: "12px",
       fontWeight: "600",
-      background: isIncome ? "#dcfce7" : "#fee2e2",
-      color:      isIncome ? "#16a34a" : "#dc2626",
-      border: `1px solid ${isIncome ? "#bbf7d0" : "#fecaca"}`,
+      background: isIncome ? "var(--success-bg)" : "var(--danger-bg)",
+      color:      isIncome ? "var(--success)" : "var(--danger)",
+      border: `1px solid ${isIncome ? "var(--success-border)" : "var(--danger-border)"}`,
       whiteSpace: "nowrap",
     }}>
       {isIncome ? "Income" : "Expense"}

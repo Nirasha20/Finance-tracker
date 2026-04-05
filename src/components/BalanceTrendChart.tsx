@@ -21,16 +21,28 @@ function formatCurrency(value: number): string {
 }
 
 // Custom tooltip shown on hover
-function CustomTooltip({ active, payload, label }: any) {
-  if (!active || !payload?.length) return null;
+type BalanceTooltipPayload = {
+  value: number;
+};
+
+function CustomTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: BalanceTooltipPayload[];
+  label?: string;
+}) {
+  if (!active || !payload?.length || !label) return null;
   return (
     <div style={{
-      background: "#fff", border: "1px solid #e5e7eb",
+      background: "var(--surface)", border: "1px solid var(--border-strong)",
       borderRadius: "10px", padding: "10px 16px",
       boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
       fontSize: "13px",
     }}>
-      <div style={{ color: "#6b7280", marginBottom: "4px" }}>{formatMonth(label)}</div>
+      <div style={{ color: "var(--text-muted)", marginBottom: "4px" }}>{formatMonth(label)}</div>
       <div style={{ fontWeight: "700", color: "#2563eb", fontSize: "15px" }}>
         {formatCurrency(payload[0].value)}
       </div>
@@ -41,9 +53,9 @@ function CustomTooltip({ active, payload, label }: any) {
 export default function BalanceTrendChart({ data }: Props) {
   return (
     <div style={{
-      background: "#fff", borderRadius: "16px",
+      background: "var(--surface)", borderRadius: "16px",
       padding: "28px 24px", flex: 1, minWidth: "300px",
-      border: "1px solid #f0f0f0",
+      border: "1px solid var(--border-strong)",
     }}>
       <h2 style={{ fontSize: "16px", fontWeight: "700", margin: "0 0 24px" }}>
         Balance Trend
@@ -59,19 +71,19 @@ export default function BalanceTrendChart({ data }: Props) {
             </linearGradient>
           </defs>
 
-          <CartesianGrid strokeDasharray="4 4" stroke="#f0f0f0" vertical={false} />
+          <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
 
           <XAxis
             dataKey="date"
             tickFormatter={formatMonth}
-            tick={{ fontSize: 12, fill: "#9ca3af" }}
+            tick={{ fontSize: 12, fill: "var(--chart-tick)" }}
             axisLine={false}
             tickLine={false}
           />
 
           <YAxis
             tickFormatter={(v) => `${v / 1000}k`}
-            tick={{ fontSize: 12, fill: "#9ca3af" }}
+            tick={{ fontSize: 12, fill: "var(--chart-tick)" }}
             axisLine={false}
             tickLine={false}
             width={40}

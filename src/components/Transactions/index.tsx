@@ -21,6 +21,28 @@ type ModalState =
   | { open: true; mode: "add" }
   | { open: true; mode: "edit"; transaction: Transaction };
 
+function SkeletonRows() {
+  const shimmer: React.CSSProperties = {
+    background: "linear-gradient(90deg,var(--skeleton-1) 25%,var(--skeleton-2) 50%,var(--skeleton-1) 75%)",
+    backgroundSize: "200% 100%",
+    animation: "shimmer 1.4s infinite",
+    borderRadius: "6px", height: "14px",
+  };
+  return (
+    <>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <tr key={i} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+          {[40, 55, 30, 20, 15].map((w, j) => (
+            <td key={j} style={{ padding: "18px 16px" }}>
+              <div style={{ ...shimmer, width: `${w}%` }} />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </>
+  );
+}
+
 export default function Transactions() {
   const dispatch = useAppDispatch();
 
@@ -110,43 +132,20 @@ export default function Transactions() {
     setDeleteConfirm(null);
   }
 
-  // Skeleton loader
-  function SkeletonRows() {
-    const shimmer: React.CSSProperties = {
-      background: "linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%)",
-      backgroundSize: "200% 100%",
-      animation: "shimmer 1.4s infinite",
-      borderRadius: "6px", height: "14px",
-    };
-    return (
-      <>
-        {[1,2,3,4,5].map((i) => (
-          <tr key={i} style={{ borderBottom: "1px solid #f3f4f6" }}>
-            {[40, 55, 30, 20, 15].map((w, j) => (
-              <td key={j} style={{ padding: "18px 16px" }}>
-                <div style={{ ...shimmer, width: `${w}%` }} />
-              </td>
-            ))}
-          </tr>
-        ))}
-      </>
-    );
-  }
-
   return (
     <>
       <div style={{
-        background: "#fff", borderRadius: "16px",
-        padding: "28px 28px 12px", border: "1px solid #f0f0f0",
+        background: "var(--surface)", borderRadius: "16px",
+        padding: "28px 28px 12px", border: "1px solid var(--border-strong)",
         marginTop: "20px",
       }}>
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-          <h2 style={{ fontSize: "18px", fontWeight: "700", margin: 0, color: "#111827" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: "700", margin: 0, color: "var(--text-strong)" }}>
             Transactions
           </h2>
           {!isLoading && (
-            <span style={{ fontSize: "13px", color: "#9ca3af" }}>
+            <span style={{ fontSize: "13px", color: "var(--text-subtle)" }}>
               {filtered.length} of {items.length} transactions
             </span>
           )}
@@ -164,12 +163,12 @@ export default function Transactions() {
         {/* Delete confirmation banner */}
         {deleteConfirm && (
           <div style={{
-            background: "#fef2f2", border: "1px solid #fecaca",
+            background: "var(--danger-bg)", border: "1px solid var(--danger-border)",
             borderRadius: "10px", padding: "12px 16px",
             marginBottom: "16px", display: "flex",
             justifyContent: "space-between", alignItems: "center",
           }}>
-            <span style={{ fontSize: "14px", color: "#dc2626", fontWeight: "500" }}>
+            <span style={{ fontSize: "14px", color: "var(--danger)", fontWeight: "500" }}>
               Are you sure you want to delete this transaction?
             </span>
             <div style={{ display: "flex", gap: "8px" }}>
@@ -177,8 +176,8 @@ export default function Transactions() {
                 onClick={() => setDeleteConfirm(null)}
                 style={{
                   padding: "6px 14px", borderRadius: "8px",
-                  border: "1px solid #e5e7eb", background: "#fff",
-                  fontSize: "13px", cursor: "pointer", color: "#374151",
+                  border: "1px solid var(--control-border)", background: "var(--control-bg)",
+                  fontSize: "13px", cursor: "pointer", color: "var(--text)",
                 }}
               >
                 Cancel
@@ -187,7 +186,7 @@ export default function Transactions() {
                 onClick={() => confirmDelete(deleteConfirm)}
                 style={{
                   padding: "6px 14px", borderRadius: "8px",
-                  border: "none", background: "#dc2626",
+                  border: "none", background: "var(--danger)",
                   fontSize: "13px", cursor: "pointer", color: "#fff",
                   fontWeight: "600",
                 }}
@@ -199,7 +198,7 @@ export default function Transactions() {
         )}
 
         {isError && (
-          <div style={{ color: "#dc2626", padding: "20px", textAlign: "center", fontSize: "14px" }}>
+          <div style={{ color: "var(--danger)", padding: "20px", textAlign: "center", fontSize: "14px" }}>
             Failed to load transactions.
           </div>
         )}
@@ -208,9 +207,9 @@ export default function Transactions() {
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #f3f4f6" }}>
+                <tr style={{ borderBottom: "2px solid var(--border-subtle)" }}>
                   {["Date","Description","Category","Amount","Type"].map((h) => (
-                    <th key={h} style={{ padding: "0 16px 14px", textAlign: "left", fontSize: "13px", fontWeight: "700", color: "#111827" }}>{h}</th>
+                    <th key={h} style={{ padding: "0 16px 14px", textAlign: "left", fontSize: "13px", fontWeight: "700", color: "var(--text-strong)" }}>{h}</th>
                   ))}
                 </tr>
               </thead>

@@ -5,6 +5,7 @@ import LoadingSkeleton from "./LoadingSkeleton";
 import { useGetFinanceSummaryQuery } from "../api/financeApi";
 import ChartsRow from "./ChartsRow";
 import InsightCards from "./InsightCards";
+import Transactions from "./Transactions";
 export default function Dashboard() {
   const { data, isLoading, isError, refetch } = useGetFinanceSummaryQuery();
 
@@ -106,6 +107,7 @@ export default function Dashboard() {
               <ChartsRow />
 
               <InsightCards />
+              <Transactions />
             </>
           )}
         </div>

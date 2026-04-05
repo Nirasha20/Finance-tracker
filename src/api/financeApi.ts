@@ -1,6 +1,6 @@
 // src/api/financeApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { FinanceSummaryResponse, ChartsResponse } from "../types";
+import type { FinanceSummaryResponse, ChartsResponse, TransactionsResponse } from "../types";
 import type { InsightsResponse } from "../components/InsightCards/icons";
 
 export const financeApi = createApi({
@@ -34,6 +34,10 @@ getInsights: builder.query<InsightsResponse, void>({
   query: () => "/finance/insights",
   providesTags: ["Finance"],
 }),
+getTransactions: builder.query<TransactionsResponse, void>({
+  query: () => "/finance/transactions",
+  providesTags: ["Finance"],
+}),
 
   }),
   
@@ -45,4 +49,5 @@ export const {
   useUpdateUserRoleMutation,
   useGetInsightsQuery,
   useGetFinanceChartsQuery,
+   useGetTransactionsQuery, 
 } = financeApi;

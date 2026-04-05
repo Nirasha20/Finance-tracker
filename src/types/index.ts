@@ -1,4 +1,5 @@
 export type TrendDirection = 'up' | 'down';
+export type TransactionType = 'income' | 'expense';
 
 export interface StatCardData {
     id: string;
@@ -37,4 +38,32 @@ export interface SpendingCategory {
 export interface ChartsResponse {
   balanceTrend: BalanceTrendPoint[];
   spendingBreakdown: SpendingCategory[];
+}
+
+export interface Transaction {
+  id: string;
+  date: string;           
+  description: string;
+  category: string;
+  amount: number;         
+  type: TransactionType;
+}
+
+export interface TransactionFilters {
+  search: string;
+  category: string;       
+  type: string;           
+  sortBy: string;         
+  sortOrder: string;     
+}
+
+export interface TransactionsResponse {
+  transactions: Transaction[];
+}
+export interface TransactionFormData {
+  date: string;
+  description: string;
+  category: string;
+  amount: string;   // string for input, parsed to number on save
+  type: TransactionType;
 }

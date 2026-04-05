@@ -2,10 +2,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { financeApi } from "../api/financeApi";
 import financeReducer from "./financeSlice";
+import transactionReducer from "./transactionSlice";
 
 export const store = configureStore({
   reducer: {
-    finance: financeReducer,          // UI state (selected role, etc.)
+    finance: financeReducer,
+    transactions: transactionReducer,          // UI state (selected role, etc.)
     [financeApi.reducerPath]: financeApi.reducer,  // API cache
   },
   middleware: (getDefaultMiddleware) =>

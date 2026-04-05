@@ -1,6 +1,11 @@
 // src/components/Transactions/index.tsx
 import { useState, useMemo, useEffect } from "react";
-import { useGetTransactionsQuery } from "../../api/financeApi";
+import {
+  useCreateTransactionMutation,
+  useDeleteTransactionMutation,
+  useGetTransactionsQuery,
+  useUpdateTransactionMutation,
+} from "../../api/financeApi";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   hydrateTransactions, addTransaction,
@@ -55,6 +60,9 @@ export default function Transactions() {
   const hydrated = useAppSelector((s) => s.transactions.hydrated);
 
   const { data, isLoading, isError } = useGetTransactionsQuery();
+  const [createTransaction] = useCreateTransactionMutation();
+  const [patchTransaction] = useUpdateTransactionMutation();
+  const [removeTransaction] = useDeleteTransactionMutation();
   const [filters, setFilters] = useState<TFilters>(defaultFilters);
   const [modal, setModal] = useState<ModalState>({ open: false });
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -108,17 +116,38 @@ export default function Transactions() {
     const amount = form.type === "expense" ? -Math.abs(rawAmount) : Math.abs(rawAmount);
 
     if (modal.open && modal.mode === "edit") {
-      dispatch(updateTransaction({
-        ...modal.transaction,
-        date: form.date, description: form.description,
-        category: form.category, amount, type: form.type,
-      }));
+      const previous = modal.transaction;
+      const next: Transaction = {
+        ...previous,
+        date: form.date,
+        description: form.description,
+        category: form.category,
+        amount,
+        type: form.type,
+      };
+
+      dispatch(updateTransaction(next));
+      patchTransaction(next)
+        .unwrap()
+        .catch(() => {
+          dispatch(updateTransaction(previous));
+        });
     } else {
-      dispatch(addTransaction({
+      const tx: Transaction = {
         id: `tx-${Date.now()}`,
-        date: form.date, description: form.description,
-        category: form.category, amount, type: form.type,
-      }));
+        date: form.date,
+        description: form.description,
+        category: form.category,
+        amount,
+        type: form.type,
+      };
+
+      dispatch(addTransaction(tx));
+      createTransaction(tx)
+        .unwrap()
+        .catch(() => {
+          dispatch(deleteTransaction(tx.id));
+        });
     }
     setModal({ open: false });
   }
@@ -128,8 +157,15 @@ export default function Transactions() {
     setDeleteConfirm(id); // show confirm state
   }
   function confirmDelete(id: string) {
+    const previous = items.find((t) => t.id === id);
     dispatch(deleteTransaction(id));
     setDeleteConfirm(null);
+
+    removeTransaction(id)
+      .unwrap()
+      .catch(() => {
+        if (previous) dispatch(addTransaction(previous));
+      });
   }
 
   return (

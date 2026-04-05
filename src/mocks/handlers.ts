@@ -1,6 +1,6 @@
 // src/mocks/handlers.ts
 import { http, HttpResponse } from "msw";
-import type { FinanceSummaryResponse } from "../types";
+import type { FinanceSummaryResponse, Transaction } from "../types";
 
 const mockFinanceData: FinanceSummaryResponse = {
   lastUpdated: new Date().toISOString(),
@@ -35,8 +35,28 @@ const mockFinanceData: FinanceSummaryResponse = {
   ],
 };
 
+// In-memory transactions store for the mock API.
+// This allows POST/PATCH/DELETE to affect subsequent GETs.
+let transactions: Transaction[] = [
+  { id: "t1", date: "2024-08-15", description: "Monthly salary", category: "Salary", amount: 4500, type: "income" },
+  { id: "t2", date: "2024-07-18", description: "Internet and phone", category: "Utilities", amount: -125, type: "expense" },
+  { id: "t3", date: "2024-07-15", description: "Monthly salary", category: "Salary", amount: 4500, type: "income" },
+  { id: "t4", date: "2024-06-22", description: "Restaurant meal", category: "Food & Dining", amount: -95.99, type: "expense" },
+  { id: "t5", date: "2024-06-15", description: "Monthly salary", category: "Salary", amount: 4500, type: "income" },
+  { id: "t6", date: "2024-06-05", description: "Streaming subscriptions", category: "Entertainment", amount: -175, type: "expense" },
+  { id: "t7", date: "2024-05-20", description: "Electronics", category: "Shopping", amount: -280, type: "expense" },
+  { id: "t8", date: "2024-05-15", description: "Monthly salary", category: "Salary", amount: 4500, type: "income" },
+  { id: "t9", date: "2024-05-10", description: "Design consultation", category: "Freelance Work", amount: 2500, type: "income" },
+  { id: "t10", date: "2024-04-28", description: "Grocery shopping", category: "Food & Dining", amount: -217, type: "expense" },
+  { id: "t11", date: "2024-04-20", description: "Online course", category: "Education", amount: -199, type: "expense" },
+  { id: "t12", date: "2024-04-15", description: "Monthly salary", category: "Salary", amount: 4500, type: "income" },
+  { id: "t13", date: "2024-03-30", description: "Gym membership", category: "Health", amount: -65, type: "expense" },
+  { id: "t14", date: "2024-03-15", description: "Monthly salary", category: "Salary", amount: 4500, type: "income" },
+  { id: "t15", date: "2024-03-08", description: "Flight tickets", category: "Travel", amount: -540, type: "expense" },
+];
+
 export const handlers = [
-    http.get("/api/finance/summary", async () => {
+  http.get("/api/finance/summary", async () => {
     // Simulate network delay (500ms) so you can see loading state
     await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -48,8 +68,6 @@ export const handlers = [
     const body = await request.json() as { role: string };
     return HttpResponse.json({ success: true, role: body.role });
   }),
-
-  // src/mocks/handlers.ts — ADD this inside the handlers array
 
 http.get("/api/finance/charts", async () => {
   await new Promise((resolve) => setTimeout(resolve, 600));
@@ -134,26 +152,42 @@ http.get("/api/finance/insights", async () => {
 }),
 http.get("/api/finance/transactions", async () => {
   await new Promise((resolve) => setTimeout(resolve, 600));
+  return HttpResponse.json({ transactions });
+}),
 
-  return HttpResponse.json({
-    transactions: [
-      { id: "t1",  date: "2024-08-15", description: "Monthly salary",          category: "Salary",        amount:  4500,   type: "income"  },
-      { id: "t2",  date: "2024-07-18", description: "Internet and phone",       category: "Utilities",     amount: -125,    type: "expense" },
-      { id: "t3",  date: "2024-07-15", description: "Monthly salary",           category: "Salary",        amount:  4500,   type: "income"  },
-      { id: "t4",  date: "2024-06-22", description: "Restaurant meal",          category: "Food & Dining", amount: -95.99,  type: "expense" },
-      { id: "t5",  date: "2024-06-15", description: "Monthly salary",           category: "Salary",        amount:  4500,   type: "income"  },
-      { id: "t6",  date: "2024-06-05", description: "Streaming subscriptions",  category: "Entertainment", amount: -175,    type: "expense" },
-      { id: "t7",  date: "2024-05-20", description: "Electronics",              category: "Shopping",      amount: -280,    type: "expense" },
-      { id: "t8",  date: "2024-05-15", description: "Monthly salary",           category: "Salary",        amount:  4500,   type: "income"  },
-      { id: "t9",  date: "2024-05-10", description: "Design consultation",      category: "Freelance Work",amount:  2500,   type: "income"  },
-      { id: "t10", date: "2024-04-28", description: "Grocery shopping",         category: "Food & Dining", amount: -217,    type: "expense" },
-      { id: "t11", date: "2024-04-20", description: "Online course",            category: "Education",     amount: -199,    type: "expense" },
-      { id: "t12", date: "2024-04-15", description: "Monthly salary",           category: "Salary",        amount:  4500,   type: "income"  },
-      { id: "t13", date: "2024-03-30", description: "Gym membership",           category: "Health",        amount: -65,     type: "expense" },
-      { id: "t14", date: "2024-03-15", description: "Monthly salary",           category: "Salary",        amount:  4500,   type: "income"  },
-      { id: "t15", date: "2024-03-08", description: "Flight tickets",           category: "Travel",        amount: -540,    type: "expense" },
-    ],
-  });
+http.post("/api/finance/transactions", async ({ request }) => {
+  await new Promise((resolve) => setTimeout(resolve, 400));
+
+  const body = (await request.json()) as { transaction: Transaction };
+  const tx = body.transaction;
+
+  transactions = [tx, ...transactions];
+  return HttpResponse.json({ success: true as const, transaction: tx });
+}),
+
+http.patch("/api/finance/transactions/:id", async ({ request, params }) => {
+  await new Promise((resolve) => setTimeout(resolve, 400));
+
+  const id = String(params.id);
+  const body = (await request.json()) as { transaction: Transaction };
+  const next = body.transaction;
+
+  const idx = transactions.findIndex((t) => t.id === id);
+  if (idx === -1) return new HttpResponse(null, { status: 404 });
+
+  transactions = transactions.map((t) => (t.id === id ? next : t));
+  return HttpResponse.json({ success: true as const, transaction: next });
+}),
+
+http.delete("/api/finance/transactions/:id", async ({ params }) => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  const id = String(params.id);
+  const existed = transactions.some((t) => t.id === id);
+  if (!existed) return new HttpResponse(null, { status: 404 });
+
+  transactions = transactions.filter((t) => t.id !== id);
+  return HttpResponse.json({ success: true as const, id });
 }),
 ];
 

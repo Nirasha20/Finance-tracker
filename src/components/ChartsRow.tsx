@@ -6,7 +6,7 @@ import SpendingBreakdownChart from "./SpendingBreakdownChart";
 // Skeleton loader matching the two-card layout
 function ChartsSkeleton() {
   const shimmer: React.CSSProperties = {
-    background: "linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%)",
+    background: "linear-gradient(90deg,var(--skeleton-1) 25%,var(--skeleton-2) 50%,var(--skeleton-1) 75%)",
     backgroundSize: "200% 100%",
     animation: "shimmer 1.4s infinite",
     borderRadius: "8px",
@@ -16,7 +16,7 @@ function ChartsSkeleton() {
       {[1, 2].map((i) => (
         <div key={i} style={{
           flex: 1, minWidth: "300px", borderRadius: "16px",
-          padding: "28px 24px", background: "#fff", border: "1px solid #f0f0f0",
+          padding: "28px 24px", background: "var(--surface)", border: "1px solid var(--border-strong)",
         }}>
           <div style={{ ...shimmer, height: "18px", width: "40%", marginBottom: "24px" }} />
           <div style={{ ...shimmer, height: "220px", width: "100%" }} />
@@ -33,8 +33,8 @@ export default function ChartsRow() {
 
   if (isError) return (
     <div style={{
-      marginTop: "20px", padding: "20px", background: "#fef2f2",
-      borderRadius: "12px", color: "#dc2626", border: "1px solid #fecaca",
+      marginTop: "20px", padding: "20px", background: "var(--danger-bg)",
+      borderRadius: "12px", color: "var(--danger)", border: "1px solid var(--danger-border)",
     }}>
       Failed to load chart data.
     </div>

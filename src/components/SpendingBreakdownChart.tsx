@@ -11,9 +11,31 @@ function formatCurrency(value: number): string {
 }
 
 // Custom label rendered outside each pie slice
+type PieLabelProps = {
+  cx?: number;
+  cy?: number;
+  midAngle?: number;
+  outerRadius?: number;
+  name?: string;
+  value?: number;
+  fill?: string;
+};
+
 function renderCustomLabel({
   cx, cy, midAngle, outerRadius, name, value, fill,
-}: any) {
+}: PieLabelProps) {
+  if (
+    cx == null ||
+    cy == null ||
+    midAngle == null ||
+    outerRadius == null ||
+    name == null ||
+    value == null ||
+    fill == null
+  ) {
+    return null;
+  }
+
   const RADIAN = Math.PI / 180;
   const radius = outerRadius + 40;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -34,12 +56,26 @@ function renderCustomLabel({
 }
 
 // Custom tooltip
-function CustomTooltip({ active, payload }: any) {
+type PieTooltipEntry = {
+  name: string;
+  value: number;
+  payload: {
+    color: string;
+  };
+};
+
+function CustomTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: PieTooltipEntry[];
+}) {
   if (!active || !payload?.length) return null;
   const { name, value, payload: p } = payload[0];
   return (
     <div style={{
-      background: "#fff", border: "1px solid #e5e7eb",
+      background: "var(--surface)", border: "1px solid var(--border-strong)",
       borderRadius: "10px", padding: "10px 16px",
       fontSize: "13px", boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
     }}>
@@ -50,7 +86,7 @@ function CustomTooltip({ active, payload }: any) {
         }} />
         <span style={{ fontWeight: "600" }}>{name}</span>
       </div>
-      <div style={{ marginTop: "4px", color: "#374151" }}>
+      <div style={{ marginTop: "4px", color: "var(--text)" }}>
         {formatCurrency(value)}
       </div>
     </div>
@@ -62,9 +98,9 @@ export default function SpendingBreakdownChart({ data }: Props) {
 
   return (
     <div style={{
-      background: "#fff", borderRadius: "16px",
+      background: "var(--surface)", borderRadius: "16px",
       padding: "28px 24px", flex: 1, minWidth: "340px",
-      border: "1px solid #f0f0f0",
+      border: "1px solid var(--border-strong)",
     }}>
       <h2 style={{ fontSize: "16px", fontWeight: "700", margin: "0 0 8px" }}>
         Spending Breakdown
@@ -110,8 +146,8 @@ export default function SpendingBreakdownChart({ data }: Props) {
       </div>
 
       {/* Top Categories Table */}
-      <div style={{ borderTop: "1px solid #f3f4f6", paddingTop: "16px" }}>
-        <div style={{ fontWeight: "700", fontSize: "13px", marginBottom: "12px", color: "#111827" }}>
+      <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "16px" }}>
+        <div style={{ fontWeight: "700", fontSize: "13px", marginBottom: "12px", color: "var(--text-strong)" }}>
           Top Spending Categories
         </div>
 
@@ -122,20 +158,20 @@ export default function SpendingBreakdownChart({ data }: Props) {
               display: "flex", alignItems: "center",
               justifyContent: "space-between",
               padding: "10px 0",
-              borderBottom: "1px solid #f9fafb",
+              borderBottom: "1px solid var(--border-subtle)",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{
                   width: "10px", height: "10px", borderRadius: "50%",
                   background: item.color, flexShrink: 0,
                 }} />
-                <span style={{ fontSize: "14px", color: "#374151" }}>{item.name}</span>
+                <span style={{ fontSize: "14px", color: "var(--text)" }}>{item.name}</span>
               </div>
               <div style={{ textAlign: "right" }}>
-                <span style={{ fontWeight: "700", fontSize: "14px", color: "#111827" }}>
+                <span style={{ fontWeight: "700", fontSize: "14px", color: "var(--text-strong)" }}>
                   {formatCurrency(item.amount)}
                 </span>
-                <span style={{ fontSize: "12px", color: "#9ca3af", marginLeft: "8px" }}>
+                <span style={{ fontSize: "12px", color: "var(--text-subtle)", marginLeft: "8px" }}>
                   ({pct}%)
                 </span>
               </div>

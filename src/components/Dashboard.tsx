@@ -14,7 +14,7 @@ export default function Dashboard() {
       style={{
         minHeight: "100vh",
         width: "100%",
-        background: "#f3f4f6",
+        background: "var(--page-bg)",
         padding: 0,
         margin: 0,
         fontFamily: "'Inter', 'Segoe UI', sans-serif",
@@ -43,11 +43,11 @@ export default function Dashboard() {
           {isError && (
             <div
               style={{
-                background: "#fef2f2",
-                border: "1px solid #fecaca",
+                background: "var(--danger-bg)",
+                border: "1px solid var(--danger-border)",
                 borderRadius: "12px",
                 padding: "20px",
-                color: "#dc2626",
+                color: "var(--danger)",
               }}
             >
               <strong>Failed to load data.</strong>
@@ -57,9 +57,9 @@ export default function Dashboard() {
                   marginLeft: "12px",
                   padding: "6px 14px",
                   borderRadius: "6px",
-                  border: "1px solid #fca5a5",
-                  background: "white",
-                  color: "#dc2626",
+                  border: "1px solid var(--danger-border)",
+                  background: "var(--surface)",
+                  color: "var(--danger)",
                   cursor: "pointer",
                 }}
               >
@@ -72,7 +72,7 @@ export default function Dashboard() {
               <div
                 style={{
                   fontSize: "12px",
-                  color: "#9ca3af",
+                  color: "var(--text-subtle)",
                   marginBottom: "16px",
                 }}
               >

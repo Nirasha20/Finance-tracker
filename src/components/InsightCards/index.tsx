@@ -4,13 +4,13 @@ import InsightCard from "./InsightCard";
 
 function InsightCardSkeleton() {
   const shimmer: React.CSSProperties = {
-    background: "linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%)",
+    background: "linear-gradient(90deg,var(--skeleton-1) 25%,var(--skeleton-2) 50%,var(--skeleton-1) 75%)",
     backgroundSize: "200% 100%",
     animation: "shimmer 1.4s infinite",
     borderRadius: "6px",
   };
   return (
-    <div style={{ flex: 1, minWidth: "200px", borderRadius: "16px", padding: "20px 22px", background: "#f9fafb", border: "1px solid #f0f0f0" }}>
+    <div style={{ flex: 1, minWidth: "200px", borderRadius: "16px", padding: "20px 22px", background: "var(--surface-2)", border: "1px solid var(--border-strong)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px" }}>
         <div style={{ ...shimmer, height: "11px", width: "45%" }} />
         <div style={{ ...shimmer, height: "20px", width: "20px", borderRadius: "50%" }} />

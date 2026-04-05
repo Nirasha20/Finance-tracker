@@ -12,15 +12,15 @@ interface Props {
 const selectStyle: React.CSSProperties = {
   padding: "9px 14px",
   borderRadius: "10px",
-  border: "1px solid #e5e7eb",
+  border: "1px solid var(--control-border)",
   fontSize: "14px",
-  color: "#374151",
-  background: "#fff",
+  color: "var(--text)",
+  background: "var(--control-bg)",
   cursor: "pointer",
   outline: "none",
   appearance: "none",
   paddingRight: "32px",
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+  backgroundImage: "var(--select-arrow)",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 10px center",
 };
@@ -37,14 +37,14 @@ export default function TransactionFilters({ filters, categories, isAdmin, onAdd
             onClick={onAdd}
             style={{
               padding: "10px 20px", borderRadius: "10px",
-              background: "#2563eb", border: "none",
+              background: "var(--primary)", border: "none",
               color: "#fff", fontSize: "14px", fontWeight: "600",
               cursor: "pointer", display: "flex",
               alignItems: "center", gap: "6px",
               transition: "background 0.15s",
             }}
-            onMouseEnter={(e) => ((e.target as HTMLButtonElement).style.background = "#1d4ed8")}
-            onMouseLeave={(e) => ((e.target as HTMLButtonElement).style.background = "#2563eb")}
+            onMouseEnter={(e) => ((e.target as HTMLButtonElement).style.background = "var(--primary-hover)")}
+            onMouseLeave={(e) => ((e.target as HTMLButtonElement).style.background = "var(--primary)")}
           >
             <span style={{ fontSize: "18px", lineHeight: 1 }}>+</span>
             Add Transaction
@@ -54,7 +54,7 @@ export default function TransactionFilters({ filters, categories, isAdmin, onAdd
       {/* Search */}
       <div style={{ position: "relative", flex: "1", minWidth: "200px", maxWidth: "300px" }}>
         <svg style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", opacity: 0.35 }}
-          width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2.5">
+          width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text)" strokeWidth="2.5">
           <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
         </svg>
         <input
@@ -64,8 +64,9 @@ export default function TransactionFilters({ filters, categories, isAdmin, onAdd
           onChange={(e) => onChange({ search: e.target.value })}
           style={{
             width: "100%", padding: "9px 12px 9px 36px",
-            borderRadius: "10px", border: "1px solid #e5e7eb",
-            fontSize: "14px", color: "#374151",
+            borderRadius: "10px", border: "1px solid var(--control-border)",
+            fontSize: "14px", color: "var(--text)",
+            background: "var(--control-bg)",
             outline: "none", boxSizing: "border-box",
           }}
         />

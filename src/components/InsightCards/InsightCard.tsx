@@ -69,7 +69,7 @@ export default function InsightCard({ data }: Props) {
       <div style={{
         fontSize: "15px",
         fontWeight: "700",
-        color: "#111827",
+        color: "var(--text-strong)",
       }}>
         {title}
       </div>
@@ -78,7 +78,7 @@ export default function InsightCard({ data }: Props) {
       <div style={{
         fontSize: "26px",
         fontWeight: "800",
-        color: "#111827",
+        color: "var(--text-strong)",
         letterSpacing: "-0.5px",
         lineHeight: 1.1,
         margin: "4px 0",
@@ -89,7 +89,7 @@ export default function InsightCard({ data }: Props) {
       {/* Subtitle */}
       <div style={{
         fontSize: "12px",
-        color: subtitleColor ?? "#6b7280",
+        color: subtitleColor ?? "var(--text-muted)",
         fontWeight: subtitleColor ? "600" : "400",
       }}>
         {subtitle}

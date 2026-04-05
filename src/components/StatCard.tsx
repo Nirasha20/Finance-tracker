@@ -41,8 +41,8 @@ export default function StatCard({ data }: Props) {
 
   // Styles change based on variant
   const cardStyle: React.CSSProperties = {
-    background: isPrimary ? "#2563EB" : "#ffffff",
-    color: isPrimary ? "#ffffff" : "#111827",
+    background: isPrimary ? "#2563EB" : "var(--surface)",
+    color: isPrimary ? "#ffffff" : "var(--text-strong)",
     borderRadius: "16px",
     padding: "24px",
     flex: 1,
@@ -50,13 +50,13 @@ export default function StatCard({ data }: Props) {
     display: "flex",
     flexDirection: "column",
     gap: "12px",
-    border: isPrimary ? "none" : `2px solid ${isUp ? "#22c55e" : "#ef4444"}`,
+    border: isPrimary ? "none" : `2px solid ${isUp ? "var(--success)" : "var(--danger)"}`,
     position: "relative",
   };
 
   const trendColor = isPrimary
     ? "#86efac"                          // soft green on blue bg
-    : isUp ? "#16a34a" : "#dc2626";      // green or red on white bg
+    : isUp ? "var(--success)" : "var(--danger)";
 
   const changeLabelColor = isPrimary ? "#bbf7d0" : trendColor;
 

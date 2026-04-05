@@ -22,13 +22,13 @@ function formatAmount(amount: number): string {
 
 const thStyle: React.CSSProperties = {
   padding: "0 16px 14px", textAlign: "left",
-  fontSize: "13px", fontWeight: "700", color: "#111827",
-  borderBottom: "2px solid #f3f4f6", whiteSpace: "nowrap",
+  fontSize: "13px", fontWeight: "700", color: "var(--text-strong)",
+  borderBottom: "2px solid var(--border-subtle)", whiteSpace: "nowrap",
 };
 
 const tdStyle: React.CSSProperties = {
-  padding: "16px", fontSize: "14px", color: "#374151",
-  borderBottom: "1px solid #f9fafb", verticalAlign: "middle",
+  padding: "16px", fontSize: "14px", color: "var(--text)",
+  borderBottom: "1px solid var(--border-subtle)", verticalAlign: "middle",
 };
 
 function EditIcon() {
@@ -54,7 +54,7 @@ function TrashIcon() {
 export default function TransactionTable({ transactions, isAdmin, onEdit, onDelete }: Props) {
   if (transactions.length === 0) {
     return (
-      <div style={{ textAlign: "center", padding: "60px 0", color: "#9ca3af", fontSize: "14px" }}>
+      <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-subtle)", fontSize: "14px" }}>
         No transactions match your filters.
       </div>
     );
@@ -77,20 +77,20 @@ export default function TransactionTable({ transactions, isAdmin, onEdit, onDele
           {transactions.map((tx, i) => (
             <tr
               key={tx.id}
-              style={{ background: i % 2 === 0 ? "#fff" : "transparent" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#f9fafb")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "#fff" : "transparent")}
+              style={{ background: i % 2 === 0 ? "var(--surface)" : "transparent" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--surface-2)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "var(--surface)" : "transparent")}
             >
-              <td style={{ ...tdStyle, color: "#6b7280", whiteSpace: "nowrap" }}>
+              <td style={{ ...tdStyle, color: "var(--text-muted)", whiteSpace: "nowrap" }}>
                 {formatDate(tx.date)}
               </td>
-              <td style={{ ...tdStyle, fontWeight: "500", color: "#111827" }}>
+              <td style={{ ...tdStyle, fontWeight: "500", color: "var(--text-strong)" }}>
                 {tx.description}
               </td>
               <td style={tdStyle}>{tx.category}</td>
               <td style={{
                 ...tdStyle, textAlign: "right", fontWeight: "700",
-                color: tx.amount >= 0 ? "#16a34a" : "#dc2626", whiteSpace: "nowrap",
+                color: tx.amount >= 0 ? "var(--success)" : "var(--danger)", whiteSpace: "nowrap",
               }}>
                 {formatAmount(tx.amount)}
               </td>
@@ -107,21 +107,21 @@ export default function TransactionTable({ transactions, isAdmin, onEdit, onDele
                       onClick={() => onEdit(tx)}
                       title="Edit"
                       style={{
-                        background: "none", border: "1px solid #e5e7eb",
+                        background: "none", border: "1px solid var(--control-border)",
                         borderRadius: "8px", padding: "6px",
-                        cursor: "pointer", color: "#6b7280",
+                        cursor: "pointer", color: "var(--text-muted)",
                         display: "flex", alignItems: "center",
                         transition: "all 0.15s",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.background = "#eff6ff";
-                        (e.currentTarget as HTMLButtonElement).style.color = "#2563eb";
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = "#bfdbfe";
+                        (e.currentTarget as HTMLButtonElement).style.background = "var(--primary-soft-bg)";
+                        (e.currentTarget as HTMLButtonElement).style.color = "var(--primary)";
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--primary-soft-border)";
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLButtonElement).style.background = "none";
-                        (e.currentTarget as HTMLButtonElement).style.color = "#6b7280";
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = "#e5e7eb";
+                        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--control-border)";
                       }}
                     >
                       <EditIcon />
@@ -132,21 +132,21 @@ export default function TransactionTable({ transactions, isAdmin, onEdit, onDele
                       onClick={() => onDelete(tx.id)}
                       title="Delete"
                       style={{
-                        background: "none", border: "1px solid #e5e7eb",
+                        background: "none", border: "1px solid var(--control-border)",
                         borderRadius: "8px", padding: "6px",
-                        cursor: "pointer", color: "#6b7280",
+                        cursor: "pointer", color: "var(--text-muted)",
                         display: "flex", alignItems: "center",
                         transition: "all 0.15s",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.background = "#fef2f2";
-                        (e.currentTarget as HTMLButtonElement).style.color = "#dc2626";
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = "#fecaca";
+                        (e.currentTarget as HTMLButtonElement).style.background = "var(--danger-bg)";
+                        (e.currentTarget as HTMLButtonElement).style.color = "var(--danger)";
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--danger-border)";
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLButtonElement).style.background = "none";
-                        (e.currentTarget as HTMLButtonElement).style.color = "#6b7280";
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = "#e5e7eb";
+                        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--control-border)";
                       }}
                     >
                       <TrashIcon />

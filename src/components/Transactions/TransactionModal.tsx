@@ -18,15 +18,16 @@ const CATEGORIES = [
 
 const inputStyle: React.CSSProperties = {
   width: "100%", padding: "10px 14px",
-  borderRadius: "10px", border: "1px solid #e5e7eb",
-  fontSize: "14px", color: "#111827",
+  borderRadius: "10px", border: "1px solid var(--control-border)",
+  fontSize: "14px", color: "var(--control-text)",
+  background: "var(--control-bg)",
   outline: "none", boxSizing: "border-box",
   transition: "border-color 0.15s",
 };
 
 const labelStyle: React.CSSProperties = {
   display: "block", fontSize: "13px",
-  fontWeight: "600", color: "#374151",
+  fontWeight: "600", color: "var(--text)",
   marginBottom: "6px",
 };
 
@@ -74,7 +75,7 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
         <label style={labelStyle}>{label}</label>
         {input}
         {errors[key] && (
-          <div style={{ fontSize: "12px", color: "#dc2626", marginTop: "4px" }}>
+          <div style={{ fontSize: "12px", color: "var(--danger)", marginTop: "4px" }}>
             {errors[key]}
           </div>
         )}
@@ -97,7 +98,7 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "#fff", borderRadius: "20px",
+          background: "var(--surface)", borderRadius: "20px",
           padding: "32px", width: "100%", maxWidth: "480px",
           boxShadow: "0 24px 48px rgba(0,0,0,0.18)",
           animation: "modalIn 0.18s ease",
@@ -112,16 +113,16 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
 
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-          <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "700", color: "#111827" }}>
+          <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "700", color: "var(--text-strong)" }}>
             {mode === "add" ? "Add Transaction" : "Edit Transaction"}
           </h3>
           <button
             onClick={onClose}
             style={{
-              background: "#f3f4f6", border: "none", borderRadius: "8px",
+              background: "var(--surface-2)", border: "none", borderRadius: "8px",
               width: "32px", height: "32px", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "18px", color: "#6b7280",
+              fontSize: "18px", color: "var(--text-muted)",
             }}
           >
             ×
@@ -140,14 +141,14 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
                   borderRadius: "10px", cursor: "pointer",
                   fontSize: "14px", fontWeight: "600",
                   border: form.type === t
-                    ? `2px solid ${t === "income" ? "#16a34a" : "#dc2626"}`
-                    : "2px solid #e5e7eb",
+                    ? `2px solid ${t === "income" ? "var(--success)" : "var(--danger)"}`
+                    : "2px solid var(--control-border)",
                   background: form.type === t
-                    ? t === "income" ? "#dcfce7" : "#fee2e2"
-                    : "#fff",
+                    ? t === "income" ? "var(--success-bg)" : "var(--danger-bg)"
+                    : "var(--surface)",
                   color: form.type === t
-                    ? t === "income" ? "#16a34a" : "#dc2626"
-                    : "#6b7280",
+                    ? t === "income" ? "var(--success)" : "var(--danger)"
+                    : "var(--text-muted)",
                   transition: "all 0.15s",
                 }}
               >
@@ -163,7 +164,7 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
             type="date"
             value={form.date}
             onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-            style={{ ...inputStyle, borderColor: errors.date ? "#dc2626" : "#e5e7eb" }}
+            style={{ ...inputStyle, borderColor: errors.date ? "var(--danger)" : "var(--control-border)" }}
           />
         )}
 
@@ -174,7 +175,7 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
             placeholder="e.g. Monthly salary"
             value={form.description}
             onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-            style={{ ...inputStyle, borderColor: errors.description ? "#dc2626" : "#e5e7eb" }}
+            style={{ ...inputStyle, borderColor: errors.description ? "var(--danger)" : "var(--control-border)" }}
           />
         )}
 
@@ -194,7 +195,7 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
           <div style={{ position: "relative" }}>
             <span style={{
               position: "absolute", left: "14px", top: "50%",
-              transform: "translateY(-50%)", color: "#9ca3af", fontSize: "14px",
+              transform: "translateY(-50%)", color: "var(--text-subtle)", fontSize: "14px",
             }}>$</span>
             <input
               type="number"
@@ -206,7 +207,7 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
               style={{
                 ...inputStyle,
                 paddingLeft: "28px",
-                borderColor: errors.amount ? "#dc2626" : "#e5e7eb",
+                borderColor: errors.amount ? "var(--danger)" : "var(--control-border)",
               }}
             />
           </div>
@@ -218,8 +219,8 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
             onClick={onClose}
             style={{
               flex: 1, padding: "12px", borderRadius: "10px",
-              border: "1px solid #e5e7eb", background: "#fff",
-              fontSize: "14px", fontWeight: "600", color: "#374151",
+              border: "1px solid var(--control-border)", background: "var(--control-bg)",
+              fontSize: "14px", fontWeight: "600", color: "var(--text)",
               cursor: "pointer",
             }}
           >
@@ -229,12 +230,12 @@ export default function TransactionModal({ mode, initial, categories, onSave, on
             onClick={handleSubmit}
             style={{
               flex: 1, padding: "12px", borderRadius: "10px",
-              border: "none", background: "#2563eb",
+              border: "none", background: "var(--primary)",
               fontSize: "14px", fontWeight: "600", color: "#fff",
               cursor: "pointer", transition: "background 0.15s",
             }}
-            onMouseEnter={(e) => ((e.target as HTMLButtonElement).style.background = "#1d4ed8")}
-            onMouseLeave={(e) => ((e.target as HTMLButtonElement).style.background = "#2563eb")}
+            onMouseEnter={(e) => ((e.target as HTMLButtonElement).style.background = "var(--primary-hover)")}
+            onMouseLeave={(e) => ((e.target as HTMLButtonElement).style.background = "var(--primary)")}
           >
             {mode === "add" ? "Add Transaction" : "Save Changes"}
           </button>

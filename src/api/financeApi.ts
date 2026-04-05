@@ -1,6 +1,7 @@
 // src/api/financeApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { FinanceSummaryResponse, ChartsResponse } from "../types";
+import type { InsightsResponse } from "../components/InsightCards/icons";
 
 export const financeApi = createApi({
   reducerPath: "financeApi",     // key in Redux store
@@ -29,13 +30,19 @@ getFinanceCharts: builder.query<ChartsResponse, void>({
   query: () => "/finance/charts",
   providesTags: ["Finance"],
 }),
+getInsights: builder.query<InsightsResponse, void>({
+  query: () => "/finance/insights",
+  providesTags: ["Finance"],
+}),
 
   }),
+  
 });
 
 // Auto-generated hooks — use these in components
 export const {
   useGetFinanceSummaryQuery,
   useUpdateUserRoleMutation,
+  useGetInsightsQuery,
   useGetFinanceChartsQuery,
 } = financeApi;

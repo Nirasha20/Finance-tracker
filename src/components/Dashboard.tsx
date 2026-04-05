@@ -4,6 +4,7 @@ import StatCard from "./StatCard";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { useGetFinanceSummaryQuery } from "../api/financeApi";
 import ChartsRow from "./ChartsRow";
+import InsightCards from "./InsightCards";
 export default function Dashboard() {
   const { data, isLoading, isError, refetch } = useGetFinanceSummaryQuery();
 
@@ -103,6 +104,8 @@ export default function Dashboard() {
                 ))}
               </div>
               <ChartsRow />
+
+              <InsightCards />
             </>
           )}
         </div>

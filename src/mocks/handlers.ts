@@ -73,6 +73,64 @@ http.get("/api/finance/charts", async () => {
       { name: "Utilities",     amount: 190.00, color: "#8b5cf6" },
     ],
   });
+
+  
+}),
+
+http.get("/api/finance/insights", async () => {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  return HttpResponse.json({
+    insights: [
+      {
+        id: "top-category",
+        label: "TOP CATEGORY",
+        title: "Shopping",
+        value: "$480.00",
+        subtitle: "28.8% of total spending",
+        icon: "bolt",
+        accentColor: "#3b82f6",
+        bgColor: "#eff6ff",
+        borderColor: "#dbeafe",
+      },
+      {
+        id: "monthly-change",
+        label: "MONTHLY CHANGE",
+        title: "This Month",
+        value: "$1,668.96",
+        subtitle: "+12% vs last month",
+        subtitleColor: "#16a34a",
+        icon: "trend-up",
+        accentColor: "#16a34a",
+        bgColor: "#f0fdf4",
+        borderColor: "#bbf7d0",
+      },
+      {
+        id: "avg-transaction",
+        label: "AVERAGE",
+        title: "Per Transaction",
+        value: "$66.76",
+        subtitle: "25 total transactions",
+        icon: "bar-chart",
+        accentColor: "#7c3aed",
+        bgColor: "#faf5ff",
+        borderColor: "#e9d5ff",
+      },
+      {
+        id: "trend",
+        label: "TREND",
+        title: "Spending",
+        value: "-8%",
+        subtitle: "vs previous month",
+        subtitleColor: "#16a34a",
+        icon: "trend-down",
+        accentColor: "#f59e0b",
+        bgColor: "#fffbeb",
+        borderColor: "#fde68a",
+      },
+    ],
+  });
 }),
 ];
+
 

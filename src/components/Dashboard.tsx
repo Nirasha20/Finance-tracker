@@ -3,7 +3,7 @@ import Header from "./Header";
 import StatCard from "./StatCard";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { useGetFinanceSummaryQuery } from "../api/financeApi";
-
+import ChartsRow from "./ChartsRow";
 export default function Dashboard() {
   const { data, isLoading, isError, refetch } = useGetFinanceSummaryQuery();
 
@@ -102,6 +102,7 @@ export default function Dashboard() {
                   <StatCard key={card.id} data={card} />
                 ))}
               </div>
+              <ChartsRow />
             </>
           )}
         </div>

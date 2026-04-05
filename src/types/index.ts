@@ -22,3 +22,19 @@ export interface FinanceState {
   lastUpdated: string | null;
   selectedRole: string;
 }
+
+export interface BalanceTrendPoint {
+  date: string;      // e.g. "2024-01-01"
+  balance: number;
+}
+
+export interface SpendingCategory {
+  name: string;
+  amount: number;
+  color: string;
+}
+
+export interface ChartsResponse {
+  balanceTrend: BalanceTrendPoint[];
+  spendingBreakdown: SpendingCategory[];
+}

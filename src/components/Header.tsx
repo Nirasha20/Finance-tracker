@@ -15,7 +15,7 @@ export default function Header() {
     await updateRole(newRole);              // also call the mock API
   };
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "32px" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", marginBottom: "32px" }}>
       <div>
         <h1 style={{ fontSize: "24px", fontWeight: "700", margin: 0 }}>Finance Dashboard</h1>
         <p style={{ fontSize: "14px", color: "#6b7280", margin: "4px 0 0" }}>

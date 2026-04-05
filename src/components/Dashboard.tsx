@@ -30,7 +30,8 @@ export default function Dashboard() {
           justifyContent: "flex-start",
           alignItems: "stretch",
           width: "100%",
-          padding: "40px 0 0 0",
+          padding: "40px 24px 0 24px",
+          boxSizing: "border-box",
         }}
       >
         <div style={{ width: "100%" }}>
@@ -94,7 +95,7 @@ export default function Dashboard() {
                   display: "flex",
                   gap: "20px",
                   flexWrap: "wrap",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                 }}
               >
                 {data.stats.map((card) => (
